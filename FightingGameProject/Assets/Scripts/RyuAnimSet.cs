@@ -102,7 +102,6 @@ public class RyuAnimSet : AnimSet {
 		airDashAnim.BuildUVAnim (startPosUV, spriteSize, 4, 1, 4, animationFps);
 		
 		airDashAnim.name = "airdash";
-		airDashAnim.loopCycles = -1;
 		
 		sprite.AddAnimation (airDashAnim);
 	}

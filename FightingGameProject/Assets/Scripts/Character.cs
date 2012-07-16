@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Character {
 	
-	protected Vector3 pos;
-	protected bool inAir = false;
+	public Vector3 pos;
+	public bool inAir = false;
 	public bool busy = false;
 	public bool disableFall = false;
 	protected float distToBotSprite = 1.0f;
@@ -14,7 +14,7 @@ public class Character {
 	protected AnimSet animSet;
 	protected float walkSpeed = 0.03f;
 	protected float backpedalSpeed = 0.02f;
-	protected float jumpUpSpeed = 0.12f;
+	protected float jumpUpSpeed = 0.20f;
 	protected float jumpDec = 0.005f;
 	protected float jumpForwardVelocity = 0.04f;
 	protected float jumpBackwardVelocity = -0.03f;
@@ -111,8 +111,8 @@ public class Character {
 	}
 	
 	public void Move(float x, float y) {
-		if(pos.x + x + distToSidesSprites > 5 && 
-			pos.x + x - distToSidesSprites < -5) {
+		if(pos.x + x + distToSidesSprites > Game.rightMax || 
+			pos.x + x - distToSidesSprites < Game.leftMin) {
 			x = 0;
 		}
 			

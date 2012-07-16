@@ -9,8 +9,8 @@ public class Inputs {
 	public static int UPLEFT = 5;
 	public static int DOWNLEFT = 6;
 	public static int DOWNRIGHT = 7;
-	public static int A = 8;
-	public static int B = 9;
+	public static int PUNCH = 8;
+	public static int KICK = 9;
 	
 	public static int NUMINPUTS = 10;
 	

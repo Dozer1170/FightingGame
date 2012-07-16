@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\InputBuffer.cs" />
      <Compile Include="Assets\Scripts\InputChecks.cs" />
      <Compile Include="Assets\Scripts\Inputs.cs" />
+     <Compile Include="Assets\Scripts\KeyBind.cs" />
      <Compile Include="Assets\Scripts\MainCamera.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\Ryu.cs" />

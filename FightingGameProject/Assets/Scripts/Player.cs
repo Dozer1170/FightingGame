@@ -4,7 +4,7 @@ using System;
 
 public class Player
 {
-	Character character;
+	public Character character;
 	
 	public Player (Character character)
 	{

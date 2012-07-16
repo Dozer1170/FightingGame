@@ -45,10 +45,6 @@ public class Ryu : Character {
 					dashInfo.StartBackDash();
 			}
 		}
-		
-		if(!inAir && Input.GetKeyUp(KeyCode.Space)) {
-			FlipDirection();	
-		}
 	}
 	
 	public override void Landed ()

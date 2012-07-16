@@ -14,4 +14,4 @@ Platform assembly: C:\Users\Erad\Documents\FightingGameProject\fight_Data\Manage
 Loading C:\Users\Erad\Documents\FightingGameProject\fight_Data\Managed\UnityEngine.dll into Unity Child Domain
 Platform assembly: C:\Users\Erad\Documents\FightingGameProject\fight_Data\Managed\Assembly-CSharp.dll (this message is harmless)
 Loading C:\Users\Erad\Documents\FightingGameProject\fight_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-- Completed reload, in  0.044 seconds
+- Completed reload, in  0.045 seconds
