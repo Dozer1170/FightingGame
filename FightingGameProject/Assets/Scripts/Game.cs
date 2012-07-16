@@ -8,11 +8,11 @@ public class Game : MonoBehaviour {
 	
 	InputBuffer playerOneInputBuffer, playerTwoInputBuffer;
 	
-	public static float groundHeight = -4.7f;
+	public static float groundHeight = -4.2f;
 	public static float leftMin = -7;
 	public static float rightMax = 7;
 	
-	public Player playerOne, playerTwo;
+	public static Player playerOne, playerTwo;
 
 	// Use this for initialization
 	void Start () {
@@ -31,6 +31,10 @@ public class Game : MonoBehaviour {
 			new KeyBind(KeyCode.UpArrow,KeyCode.DownArrow,KeyCode.LeftArrow,
 			KeyCode.RightArrow,KeyCode.Z,KeyCode.X));
 		
+		playerOne.character.SetOtherChar(playerTwo.character);
+		playerTwo.character.SetOtherChar(playerOne.character);
+		
+		
 		MainCamera cam = (MainCamera) GameObject.FindObjectOfType(typeof(MainCamera));
 		cam.playerOne = playerOne;
 		cam.playerTwo = playerTwo;
@@ -45,6 +49,12 @@ public class Game : MonoBehaviour {
 		playerOne.Update();
 		playerTwo.Update();
 		
+		CheckDirections();
+		
+		Invoke("UpdateGame", 0.0166f);
+	}
+	
+	void CheckDirections() {
 		if(playerOne.character.pos.x < playerTwo.character.pos.x){
 			if(playerOne.character.direction != 1) {
 				if(!playerOne.character.inAir)	
@@ -63,9 +73,6 @@ public class Game : MonoBehaviour {
 				if(!playerTwo.character.inAir)	
 					playerTwo.character.FlipDirection();
 			}
-		}
-			
-		
-		Invoke("UpdateGame", 0.0166f);
+		}		
 	}
 }

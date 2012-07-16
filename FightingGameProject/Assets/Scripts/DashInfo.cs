@@ -3,49 +3,26 @@ using System.Collections;
 
 public class DashInfo {
 
-	int dashRecovery = 5;
-	int forwardDashDuration = 15;
-	int backDashDuration = 12;
-	int backDashMovementDuration = 10;
-	int airDashSpeedDuration = 20;
-	int airDashDir;
-	int dashProgress = 0;
-	float dashSpeed = 0.06f;
-	float airDashSpeed = 0.08f;
+	public int dashRecovery = 5;
+	public int forwardDashDuration = 15;
+	public int backDashDuration = 12;
+	public int backDashMovementDuration = 10;
+	public int dashProgress = 0;
+	public float dashSpeed = 0.06f;
+	public float airDashSpeed = 0.08f;
 	public bool forwardDashing = false;
 	public bool backDashing = false;
-	public bool airDashing = false;
-	public bool airDashMoveDone = false;
 	
-	AnimSet animSet;
-	Character character;
+	public AnimSet animSet;
+	public Character character;
+	
+	public DashInfo() {
+		
+	}
 	
 	public DashInfo(AnimSet anims, Character character) {
 		this.animSet = anims;
 		this.character = character;
-	}
-	
-	public void StartAirDash(int dir) {
-		dashProgress = 0;
-		airDashing = true;
-		airDashMoveDone = false;
-		airDashDir = dir;
-		character.disableFall = true;
-		character.ySpeed = 0;
-		character.xSpeed = airDashDir * airDashSpeed;
-		animSet.PlayAnim(RyuAnimSet.AIRDASH);
-	}
-	
-	public void DoAirDash() {
-		if(!airDashMoveDone) {
-			if(dashProgress < airDashSpeedDuration) {
-				dashProgress++;
-			} else {
-				airDashMoveDone = true;
-				character.disableFall = false;
-				character.currRecovery = dashRecovery;
-			}
-		}
 	}
 	
 	public void StartForwardDash() {

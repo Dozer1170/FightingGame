@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\AnimSet.cs" />
+     <Compile Include="Assets\Scripts\BoundingBox.cs" />
      <Compile Include="Assets\Scripts\Character.cs" />
      <Compile Include="Assets\Scripts\DashInfo.cs" />
      <Compile Include="Assets\Scripts\Game.cs" />
@@ -54,6 +55,7 @@
      <Compile Include="Assets\Scripts\KeyBind.cs" />
      <Compile Include="Assets\Scripts\MainCamera.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
+     <Compile Include="Assets\Scripts\PlusAirDashInfo.cs" />
      <Compile Include="Assets\Scripts\Ryu.cs" />
      <Compile Include="Assets\Scripts\RyuAnimSet.cs" />
      <Compile Include="Assets\Scripts\Sprites\LinkedSpriteManager.cs" />

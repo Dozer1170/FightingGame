@@ -3,21 +3,20 @@ using System.Collections;
 
 public class Character {
 	
+	public Character otherChar;
 	public Vector3 pos;
 	public bool inAir = false;
 	public bool busy = false;
 	public bool disableFall = false;
-	protected float distToBotSprite = 1.0f;
-	protected float distToSidesSprites = 1.0f;
 	protected SpriteManager sm;
 	protected Sprite sprite;
 	protected AnimSet animSet;
 	protected float walkSpeed = 0.03f;
 	protected float backpedalSpeed = 0.02f;
-	protected float jumpUpSpeed = 0.20f;
-	protected float jumpDec = 0.005f;
-	protected float jumpForwardVelocity = 0.04f;
-	protected float jumpBackwardVelocity = -0.03f;
+	protected float jumpUpSpeed = 0.17f;
+	protected float jumpDec = 0.007f;
+	protected float jumpForwardVelocity = 0.06f;
+	protected float jumpBackwardVelocity = -0.05f;
 	public float ySpeed;
 	public float xSpeed;
 	public int direction = 1;
@@ -29,6 +28,23 @@ public class Character {
 	public int DOWNBACK = Inputs.DOWNLEFT;
 	public int recoveryProgress;
 	public int currRecovery = -1;
+	public BoundingBox boundingBox = new BoundingBox();
+	
+	public Character() {
+		
+	}
+	
+	public Character(Vector3 pos, Sprite sprite, SpriteManager sm) {
+		this.pos = pos;
+		this.sprite = sprite;
+		this.sm = sm;
+		sprite.hidden = false;
+		animSet = new AnimSet(sprite, sm);
+	}
+	
+	public void SetOtherChar(Character otherChar) {
+		this.otherChar = otherChar;	
+	}
 	
 	public void FlipDirection() {
 		if(direction == 1) {
@@ -59,7 +75,7 @@ public class Character {
 				Move (xSpeed, 0);
 			} else {	
 				ySpeed -= jumpDec;
-				if (pos.y - distToBotSprite + ySpeed > Game.groundHeight) {
+				if (pos.y - boundingBox.bottom + ySpeed > Game.groundHeight) {
 						Move (xSpeed, ySpeed);
 				} else {
 					Landed();
@@ -111,13 +127,52 @@ public class Character {
 	}
 	
 	public void Move(float x, float y) {
-		if(pos.x + x + distToSidesSprites > Game.rightMax || 
-			pos.x + x - distToSidesSprites < Game.leftMin) {
+		if(pos.x + x + boundingBox.front > Game.rightMax || 
+			pos.x + x - boundingBox.back < Game.leftMin) {
 			x = 0;
 		}
 			
+		if(CheckCollision(pos.x + x, pos.y + y)) {
+			x = x/2;
+			otherChar.ForceMove((x + 0.01f) * -otherChar.direction);
+		}
+			
+		
 		pos = new Vector3(pos.x + x * direction, pos.y + y, pos.z);
 		sprite.clientTransform.position = pos;
+	}
+	
+	public void ForceMove(float x) {
+		pos = new Vector3(pos.x + x, pos.y, pos.z);
+		sprite.clientTransform.position = pos;
+	}
+	
+	public virtual bool CheckCollision(float nx, float ny) {
+		float left1, left2;
+		float right1, right2;
+		float top1,top2;
+		float bottom1, bottom2;
+		
+		left1 = nx - boundingBox.back;
+		left2 = otherChar.pos.x - otherChar.boundingBox.front;
+		right1 = nx + boundingBox.front;
+		right2 = otherChar.pos.x + otherChar.boundingBox.back;
+		top1 = ny + boundingBox.top;
+		top2 = otherChar.pos.y + otherChar.boundingBox.top;
+		bottom1 = ny - boundingBox.bottom;
+		bottom2 = otherChar.pos.y - otherChar.boundingBox.bottom;
+		
+		if (bottom1 > top2) 
+			return false;
+        if (top1 < bottom2) 
+			return false;
+
+        if (right1 < left2) 
+			return false;
+        if (left1 > right2) 
+			return false;
+
+        return true;
 	}
 	
 	public void StartVerticalJump ()

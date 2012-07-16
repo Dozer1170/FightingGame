@@ -21,23 +21,13 @@ public class Ryu : Character {
 			dashInfo.DoForwardDash();
 		else if(dashInfo.backDashing)
 			dashInfo.DoBackDash();
-		else if(dashInfo.airDashing)
-			dashInfo.DoAirDash();
 		
 	}
 	
 	public override void CheckInput(bool[,] buffer) {
 		if(!busy) {
 			base.CheckInput(buffer);
-			if(inAir) {
-				if(!dashInfo.airDashing) {
-					if(InputChecks.ForwardDashed(buffer, FORWARD))
-						dashInfo.StartAirDash(1);
-					
-					if(InputChecks.BackDashed(buffer, BACKWARD))
-						dashInfo.StartAirDash(-1);
-				}
-			} else {
+			if(!inAir) {
 				if(InputChecks.ForwardDashed(buffer, FORWARD))
 					dashInfo.StartForwardDash();
 				
@@ -45,11 +35,5 @@ public class Ryu : Character {
 					dashInfo.StartBackDash();
 			}
 		}
-	}
-	
-	public override void Landed ()
-	{
-		base.Landed ();
-		dashInfo.airDashing = false;
 	}
 }
