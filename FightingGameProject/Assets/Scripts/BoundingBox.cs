@@ -6,10 +6,10 @@ public class BoundingBox {
 	public float front,back,top,bottom;
 	
 	public BoundingBox() {
-		front = 0.5f;
-		back = 0.5f;
-		top = 0.5f;
-		bottom = 0.5f;
+		front = 0.4f;
+		back = 0.4f;
+		top = 0.4f;
+		bottom = 0.4f;
 	}
 	
 	public BoundingBox(float front, float back, float top, float bottom) {

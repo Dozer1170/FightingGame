@@ -8,6 +8,7 @@ public class MainCamera : MonoBehaviour {
 	public float minX;
 	public float maxX;
 	public float maxY;
+	public static float playerMaxXDist = 8;
 	
 	public Player playerOne, playerTwo;
 	

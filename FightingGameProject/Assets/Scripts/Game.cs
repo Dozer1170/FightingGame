@@ -9,8 +9,8 @@ public class Game : MonoBehaviour {
 	InputBuffer playerOneInputBuffer, playerTwoInputBuffer;
 	
 	public static float groundHeight = -4.2f;
-	public static float leftMin = -7;
-	public static float rightMax = 7;
+	public static float leftMin = -6.5f;
+	public static float rightMax = 6.5f;
 	
 	public static Player playerOne, playerTwo;
 

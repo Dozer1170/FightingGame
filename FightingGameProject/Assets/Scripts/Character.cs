@@ -127,23 +127,67 @@ public class Character {
 	}
 	
 	public void Move(float x, float y) {
-		if(pos.x + x + boundingBox.front > Game.rightMax || 
-			pos.x + x - boundingBox.back < Game.leftMin) {
-			x = 0;
-		}
+		if(Mathf.Abs((pos.x + x) - (otherChar.pos.x)) < MainCamera.playerMaxXDist) {
+			pos = new Vector3(pos.x + x * direction, pos.y + y, pos.z);
+			sprite.clientTransform.position = pos;
 			
-		if(CheckCollision(pos.x + x, pos.y + y)) {
-			x = x/2;
-			otherChar.ForceMove((x + 0.01f) * -otherChar.direction);
-		}
+			if(CheckCollision(pos.x, pos.y)) {
+				Displace();
+			}
 			
-		
-		pos = new Vector3(pos.x + x * direction, pos.y + y, pos.z);
-		sprite.clientTransform.position = pos;
+			if(pos.x + boundingBox.back > Game.rightMax) {
+				ForceMoveAbsolute(Game.rightMax - boundingBox.back,pos.y);	
+			} else if(pos.x - boundingBox.back < Game.leftMin) {
+				ForceMoveAbsolute(Game.leftMin + boundingBox.back, pos.y);
+			}
+		} else {
+			//Still move y
+			pos = new Vector3(pos.x, pos.y + y, pos.z);
+			sprite.clientTransform.position = pos;
+		}
 	}
 	
-	public void ForceMove(float x) {
-		pos = new Vector3(pos.x + x, pos.y, pos.z);
+	public void Displace() {
+		if(inAir) {
+			if(pos.x <= otherChar.pos.x) {
+				//Slide other char right
+					otherChar.SetRightOfOtherCharacter();
+			}
+			else {
+				//Slide other char left	
+				otherChar.SetLeftOfOtherCharacter();
+			}
+		} else {
+			if(pos.x <= otherChar.pos.x) {
+				//Slide other char right
+				otherChar.SetRightOfOtherCharacter();
+			} else {
+				//Slide other char left	
+				otherChar.SetLeftOfOtherCharacter();
+			}
+		}
+	}
+	
+	public void SetRightOfOtherCharacter() {
+		float rightX = otherChar.pos.x + boundingBox.front + 
+			otherChar.boundingBox.front + 0.02f;
+		if(rightX + boundingBox.back > Game.rightMax)
+			otherChar.SetLeftOfOtherCharacter();
+		else
+			ForceMoveAbsolute(rightX,pos.y);
+	}
+	
+	public void SetLeftOfOtherCharacter() {
+		float leftX = otherChar.pos.x - boundingBox.front -
+			otherChar.boundingBox.front - 0.02f;
+		if(leftX - boundingBox.back < Game.leftMin)
+			otherChar.SetRightOfOtherCharacter();
+		else 
+			ForceMoveAbsolute(leftX,pos.y);
+	}
+	
+	public void ForceMoveAbsolute(float nx, float ny) {
+		pos = new Vector3(nx, ny, pos.z);
 		sprite.clientTransform.position = pos;
 	}
 	
