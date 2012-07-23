@@ -1,10 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Character.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Move.cs">
     <Files>
-      <File FileName="Assets\Scripts\Ryu.cs" Line="18" Column="17" />
-      <File FileName="Assets\Scripts\MainCamera.cs" Line="11" Column="40" />
-      <File FileName="Assets\Scripts\Character.cs" Line="145" Column="27" />
+      <File FileName="Assets\Scripts\Move.cs" Line="57" Column="96" />
+      <File FileName="Assets\Scripts\Character.cs" Line="54" Column="20" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

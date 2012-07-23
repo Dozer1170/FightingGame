@@ -4,13 +4,14 @@ using System.Collections;
 public class Character {
 	
 	public Character otherChar;
+	public int health = 100;
 	public Vector3 pos;
 	public bool inAir = false;
 	public bool busy = false;
 	public bool disableFall = false;
 	protected SpriteManager sm;
 	protected Sprite sprite;
-	protected AnimSet animSet;
+	public AnimSet animSet;
 	protected float walkSpeed = 0.03f;
 	protected float backpedalSpeed = 0.02f;
 	protected float jumpUpSpeed = 0.17f;
@@ -20,15 +21,18 @@ public class Character {
 	public float ySpeed;
 	public float xSpeed;
 	public int direction = 1;
+	public int UP = Inputs.UP;
 	public int FORWARD = Inputs.RIGHT;
 	public int BACKWARD = Inputs.LEFT;
 	public int UPFORWARD = Inputs.UPRIGHT;
 	public int UPBACK = Inputs.UPLEFT;
 	public int DOWNFORWARD = Inputs.DOWNRIGHT;
 	public int DOWNBACK = Inputs.DOWNLEFT;
+	public int DOWN = Inputs.DOWN;
 	public int recoveryProgress;
 	public int currRecovery = -1;
 	public BoundingBox boundingBox = new BoundingBox();
+	public MoveSet moveSet;
 	
 	public Character() {
 		
@@ -44,6 +48,19 @@ public class Character {
 	
 	public void SetOtherChar(Character otherChar) {
 		this.otherChar = otherChar;	
+	}
+	
+	public void TakeHit(int damage) {
+		health -= damage;
+		Debug.Log("HEALTH: " + health);
+		//TODO update health bar
+		
+		if(health <= 0) {
+			//TODO DEATH HANDLING	
+		} else {
+			animSet.PlayAnim(AnimSet.NORMALHIT);	
+		}
+			
 	}
 	
 	public void FlipDirection() {
@@ -75,7 +92,7 @@ public class Character {
 				Move (xSpeed, 0);
 			} else {	
 				ySpeed -= jumpDec;
-				if (pos.y - boundingBox.bottom + ySpeed > Game.groundHeight) {
+				if (pos.y + boundingBox.bottom + ySpeed > Game.groundHeight) {
 						Move (xSpeed, ySpeed);
 				} else {
 					Landed();
@@ -127,18 +144,20 @@ public class Character {
 	}
 	
 	public void Move(float x, float y) {
-		if(Mathf.Abs((pos.x + x) - (otherChar.pos.x)) < MainCamera.playerMaxXDist) {
+		if(Mathf.Abs((pos.x + x * direction) - (otherChar.pos.x)) < MainCamera.playerMaxXDist) {
 			pos = new Vector3(pos.x + x * direction, pos.y + y, pos.z);
 			sprite.clientTransform.position = pos;
 			
-			if(CheckCollision(pos.x, pos.y)) {
+			if(Game.CheckCollision(boundingBox, pos.x, pos.y, direction,
+					otherChar.boundingBox, otherChar.pos.x, otherChar.pos.y,
+					otherChar.direction)) {
 				Displace();
 			}
 			
-			if(pos.x + boundingBox.back > Game.rightMax) {
-				ForceMoveAbsolute(Game.rightMax - boundingBox.back,pos.y);	
-			} else if(pos.x - boundingBox.back < Game.leftMin) {
-				ForceMoveAbsolute(Game.leftMin + boundingBox.back, pos.y);
+			if(pos.x - boundingBox.back > Game.rightMax) {
+				ForceMoveAbsolute(Game.rightMax + boundingBox.back,pos.y);	
+			} else if(pos.x + boundingBox.back < Game.leftMin) {
+				ForceMoveAbsolute(Game.leftMin - boundingBox.back, pos.y);
 			}
 		} else {
 			//Still move y
@@ -151,7 +170,7 @@ public class Character {
 		if(inAir) {
 			if(pos.x <= otherChar.pos.x) {
 				//Slide other char right
-					otherChar.SetRightOfOtherCharacter();
+				otherChar.SetRightOfOtherCharacter();
 			}
 			else {
 				//Slide other char left	
@@ -171,7 +190,7 @@ public class Character {
 	public void SetRightOfOtherCharacter() {
 		float rightX = otherChar.pos.x + boundingBox.front + 
 			otherChar.boundingBox.front + 0.02f;
-		if(rightX + boundingBox.back > Game.rightMax)
+		if(rightX - boundingBox.back > Game.rightMax)
 			otherChar.SetLeftOfOtherCharacter();
 		else
 			ForceMoveAbsolute(rightX,pos.y);
@@ -180,7 +199,7 @@ public class Character {
 	public void SetLeftOfOtherCharacter() {
 		float leftX = otherChar.pos.x - boundingBox.front -
 			otherChar.boundingBox.front - 0.02f;
-		if(leftX - boundingBox.back < Game.leftMin)
+		if(leftX + boundingBox.back < Game.leftMin)
 			otherChar.SetRightOfOtherCharacter();
 		else 
 			ForceMoveAbsolute(leftX,pos.y);
@@ -189,34 +208,6 @@ public class Character {
 	public void ForceMoveAbsolute(float nx, float ny) {
 		pos = new Vector3(nx, ny, pos.z);
 		sprite.clientTransform.position = pos;
-	}
-	
-	public virtual bool CheckCollision(float nx, float ny) {
-		float left1, left2;
-		float right1, right2;
-		float top1,top2;
-		float bottom1, bottom2;
-		
-		left1 = nx - boundingBox.back;
-		left2 = otherChar.pos.x - otherChar.boundingBox.front;
-		right1 = nx + boundingBox.front;
-		right2 = otherChar.pos.x + otherChar.boundingBox.back;
-		top1 = ny + boundingBox.top;
-		top2 = otherChar.pos.y + otherChar.boundingBox.top;
-		bottom1 = ny - boundingBox.bottom;
-		bottom2 = otherChar.pos.y - otherChar.boundingBox.bottom;
-		
-		if (bottom1 > top2) 
-			return false;
-        if (top1 < bottom2) 
-			return false;
-
-        if (right1 < left2) 
-			return false;
-        if (left1 > right2) 
-			return false;
-
-        return true;
 	}
 	
 	public void StartVerticalJump ()

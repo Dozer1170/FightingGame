@@ -7,9 +7,9 @@ public class BoundingBox {
 	
 	public BoundingBox() {
 		front = 0.4f;
-		back = 0.4f;
+		back = -0.4f;
 		top = 0.4f;
-		bottom = 0.4f;
+		bottom = -0.4f;
 	}
 	
 	public BoundingBox(float front, float back, float top, float bottom) {

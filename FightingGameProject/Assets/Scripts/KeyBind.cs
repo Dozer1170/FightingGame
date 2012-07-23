@@ -16,5 +16,7 @@ public class KeyBind {
 		this.DOWN = DOWN;
 		this.LEFT = LEFT;
 		this.RIGHT = RIGHT;
+		this.PUNCH = PUNCH;
+		this.KICK = KICK;
 	}
 }

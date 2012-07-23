@@ -4,8 +4,10 @@ using System.Collections;
 public class RyuAnimSet : AnimSet {
 	
 	public static string FORWARDDASH = "forwarddash", BACKDASH = "backdash", AIRDASH = "airdash";
+	public static string HADOUKEN = "hadouken", SHORYUKEN = "shoryuken";
 	
-	UVAnimation forwardDashAnim, backDashAnim, airDashAnim;
+	UVAnimation forwardDashAnim, backDashAnim, airDashAnim, shoryukenAnim, hadoukenAnim,
+		normalHitAnim;
 	
 	public RyuAnimSet(Sprite sprite, SpriteManager sm) {
 		this.sprite = sprite;
@@ -22,6 +24,9 @@ public class RyuAnimSet : AnimSet {
 		AddAirDashAnimation();
 		AddJumpAnimation();
 		AddForwardJumpAnimation();
+		AddShoryukenAnimation();
+		AddHadoukenAnimation();
+		AddNormalHitAnimation();
 		PlayAnim (standingAnim.name);	
 	}
 	
@@ -33,7 +38,7 @@ public class RyuAnimSet : AnimSet {
 		
 		standingAnim.BuildUVAnim (startPosUV, spriteSize, 9, 1, 9, animationFps);
 		
-		standingAnim.name = "standing";
+		standingAnim.name = STANDING;
 		standingAnim.loopCycles = -1;
 		
 		sprite.AddAnimation (standingAnim);	
@@ -47,7 +52,7 @@ public class RyuAnimSet : AnimSet {
 		
 		walkForwardAnim.BuildUVAnim (startPosUV, spriteSize, 11, 1, 11, animationFps);
 		
-		walkForwardAnim.name = "walkforward";
+		walkForwardAnim.name = WALKFORWARD;
 		walkForwardAnim.loopCycles = -1;
 		
 		sprite.AddAnimation (walkForwardAnim);	
@@ -59,9 +64,9 @@ public class RyuAnimSet : AnimSet {
 		Vector2 startPosUV = sm.PixelCoordToUVCoord (0, 1536);
 		Vector2 spriteSize = sm.PixelSpaceToUVSpace (256, 256);
 		
-		forwardDashAnim.BuildUVAnim (startPosUV, spriteSize, 6, 1, 6, animationFps);
+		forwardDashAnim.BuildUVAnim (startPosUV, spriteSize, 6, 1, 6, 15);
 		
-		forwardDashAnim.name = "forwarddash";
+		forwardDashAnim.name = FORWARDDASH;
 		
 		sprite.AddAnimation (forwardDashAnim);
 	}
@@ -74,7 +79,7 @@ public class RyuAnimSet : AnimSet {
 		
 		backpedalAnim.BuildUVAnim (startPosUV, spriteSize, 11, 1, 11, animationFps);
 		
-		backpedalAnim.name = "backpedal";
+		backpedalAnim.name = BACKPEDAL;
 		backpedalAnim.loopCycles = -1;
 		
 		sprite.AddAnimation (backpedalAnim);	
@@ -88,7 +93,7 @@ public class RyuAnimSet : AnimSet {
 		
 		backDashAnim.BuildUVAnim (startPosUV, spriteSize, 4, 1, 4, animationFps);
 		
-		backDashAnim.name = "backdash";
+		backDashAnim.name = BACKDASH;
 		
 		sprite.AddAnimation (backDashAnim);
 	}
@@ -101,7 +106,7 @@ public class RyuAnimSet : AnimSet {
 		
 		airDashAnim.BuildUVAnim (startPosUV, spriteSize, 4, 1, 4, animationFps);
 		
-		airDashAnim.name = "airdash";
+		airDashAnim.name = AIRDASH;
 		
 		sprite.AddAnimation (airDashAnim);
 	}
@@ -114,7 +119,7 @@ public class RyuAnimSet : AnimSet {
 		
 		jumpAnim.BuildUVAnim (startPosUV, spriteSize, 11, 1, 11, animationFps);
 		
-		jumpAnim.name = "jump";
+		jumpAnim.name = JUMP;
 		
 		sprite.AddAnimation (jumpAnim);	
 	}
@@ -127,9 +132,47 @@ public class RyuAnimSet : AnimSet {
 		
 		forwardJumpAnim.BuildUVAnim (startPosUV, spriteSize, 14, 1, 14, animationFps);
 		
-		forwardJumpAnim.name = "forwardjump";
+		forwardJumpAnim.name = FORWARDJUMP;
 		
 		sprite.AddAnimation (forwardJumpAnim);	
 	}
 	
+	public void AddShoryukenAnimation() {
+		shoryukenAnim = new UVAnimation ();
+		
+		Vector2 startPosUV = sm.PixelCoordToUVCoord (1024, 1792);
+		Vector2 spriteSize = sm.PixelSpaceToUVSpace (256, 256);
+		
+		shoryukenAnim.BuildUVAnim (startPosUV, spriteSize, 5, 1, 5, 10);
+		
+		shoryukenAnim.name = SHORYUKEN;
+		
+		sprite.AddAnimation (shoryukenAnim);	
+	}
+	
+	public void AddHadoukenAnimation() {
+		hadoukenAnim = new UVAnimation ();
+		
+		Vector2 startPosUV = sm.PixelCoordToUVCoord (0, 2048);
+		Vector2 spriteSize = sm.PixelSpaceToUVSpace (256, 256);
+		
+		hadoukenAnim.BuildUVAnim (startPosUV, spriteSize, 11, 1, 11, animationFps);
+		
+		hadoukenAnim.name = HADOUKEN;
+		
+		sprite.AddAnimation (hadoukenAnim);	
+	}
+	
+	public void AddNormalHitAnimation() {
+		normalHitAnim = new UVAnimation ();
+		
+		Vector2 startPosUV = sm.PixelCoordToUVCoord (2816, 768);
+		Vector2 spriteSize = sm.PixelSpaceToUVSpace (256, 256);
+		
+		normalHitAnim.BuildUVAnim (startPosUV, spriteSize, 5, 1, 5, animationFps);
+		
+		normalHitAnim.name = NORMALHIT;
+		
+		sprite.AddAnimation (normalHitAnim);	
+	}
 }

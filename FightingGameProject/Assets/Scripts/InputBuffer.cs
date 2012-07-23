@@ -25,7 +25,7 @@ public class InputBuffer {
 		buffer[0,Inputs.UPLEFT] = buffer[0,Inputs.UP] & buffer[0,Inputs.LEFT];
 		buffer[0,Inputs.DOWNRIGHT] = buffer[0,Inputs.DOWN] & buffer[0,Inputs.RIGHT];
 		buffer[0,Inputs.DOWNLEFT] = buffer[0,Inputs.DOWN] & buffer[0,Inputs.LEFT];
-		buffer[0,Inputs.PUNCH] = Input.GetKey(keybind.KICK);
+		buffer[0,Inputs.PUNCH] = Input.GetKey(keybind.PUNCH);
 		buffer[0,Inputs.KICK] = Input.GetKey(keybind.KICK);
 		
 		if(buffer[0,Inputs.UPRIGHT]) {
@@ -56,6 +56,10 @@ public class InputBuffer {
 			buffer[i,Inputs.DOWN] = buffer[i-1,Inputs.DOWN];
 			buffer[i,Inputs.LEFT] = buffer[i-1,Inputs.LEFT];
 			buffer[i,Inputs.RIGHT] = buffer[i-1,Inputs.RIGHT];
+			buffer[i,Inputs.UPRIGHT] = buffer[i-1,Inputs.UPRIGHT];
+			buffer[i,Inputs.UPLEFT] = buffer[i-1,Inputs.UPLEFT];
+			buffer[i,Inputs.DOWNRIGHT] = buffer[i-1,Inputs.DOWNRIGHT];
+			buffer[i,Inputs.DOWNLEFT] = buffer[i-1,Inputs.DOWNLEFT];
 			buffer[i,Inputs.PUNCH] = buffer[i-1,Inputs.PUNCH];
 			buffer[i,Inputs.KICK] = buffer[i-1,Inputs.KICK];
 		}

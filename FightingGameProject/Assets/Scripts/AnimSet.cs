@@ -8,6 +8,7 @@ public class AnimSet {
 	public static string BACKPEDAL = "backpedal";
 	public static string JUMP = "jump";
 	public static string FORWARDJUMP = "forwardjump";
+	public static string NORMALHIT = "normalhit";
 
 	public string currAnim;
 	protected UVAnimation standingAnim;
@@ -15,7 +16,7 @@ public class AnimSet {
 	protected UVAnimation backpedalAnim;
 	protected UVAnimation jumpAnim;
 	protected UVAnimation forwardJumpAnim;
-	protected int animationFps = 15;
+	protected int animationFps = 20;
 	
 	protected Sprite sprite;
 	protected SpriteManager sm;

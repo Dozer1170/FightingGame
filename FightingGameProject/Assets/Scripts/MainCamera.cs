@@ -15,7 +15,7 @@ public class MainCamera : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		focalPoint = GameObject.Find("Background").transform.position;
-		focalPoint = new Vector3(focalPoint.x, minY, -8);
+		focalPoint = new Vector3(focalPoint.x, minY, -9);
 	}
 	
 	// Update is called once per frame
